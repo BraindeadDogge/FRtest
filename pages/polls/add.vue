@@ -259,12 +259,14 @@
             </v-btn>
           </v-col>
           <v-col cols="6" style="text-align: end;">
-            <v-btn
-              color="primary"
-              @click="st = 1"
-            >
-              Далее
-            </v-btn>
+            <nuxt-link to="/">
+              <v-btn
+                color="primary"
+                @click="SendData()"
+              >
+                Отправить опрос
+              </v-btn>
+            </nuxt-link>
           </v-col>
         </v-row>
       </v-stepper-content>
@@ -298,19 +300,7 @@ export default {
     cards: [
       {
         state: "Возраст респондента",
-        type:[
-          [13, 20],
-          [13, 20],
-          [13, 20],
-        ],
-      },
-      {
-        state: "Тип карты лояльности",
-        type: ["Gold"],
-      },
-      {
-        state: "Стасус карты лояльности",
-        type: ["Активна"],
+        type:[],
       },
     ],
     states: {
@@ -331,7 +321,17 @@ export default {
       type:[],
     },
   }),
-  
+  methods: {
+    SendData() {
+      this.st = 1
+      this.$axios.$post('https://testapiwebsite.org/polls/', {
+          data: this.cards
+        })
+      .then((response) => {
+        console.log(response)
+      })
+    }
+  }
 }
 </script>
 
